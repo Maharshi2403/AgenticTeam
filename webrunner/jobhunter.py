@@ -1,5 +1,5 @@
-from browser_use import Agent, ChatGoogle, Browser
-from browser_use.llm import ChatDeepSeek
+from browser_use import Agent, ChatOpenAI, Browser
+
 from dotenv import load_dotenv
 from data import userData
 import asyncio
@@ -26,8 +26,8 @@ INSTRUCTIONS:
 1. First, navigate to the job application URL and wait for it to load completely
 2. Look for "Apply", "Submit Application" or similar text and click it 
 3. If you see a login/signup form:
-   - Use login_email: {login_email or 'Not provided'}
-   - Use login_password: {login_password or 'Not provided'}
+   - Use login_email: {login_email or 'maharshi7178@gmail.com'}
+   - Use login_password: {login_password or 'Maha1147@'}
    - Click login/submit button
 4. Fill out ALL form fields using the user information above:
    - Personal details: name, email, phone, address
@@ -61,7 +61,7 @@ info = candidate_info(
 )
 
 # SOLUTION: Switch to Pro model which has higher rate limits
-llm = ChatDeepSeek(model='deepseek/deepseek-r1-0528:free', api_key=DEEPSEEK_API_KEY)
+llm = ChatOpenAI(model='deepseek/deepseek-chat-v3-0324', api_key=DEEPSEEK_API_KEY, base_url='https://openrouter.ai/api/v1')
 
 
 
@@ -74,8 +74,7 @@ async def main(candidate_task_info: json):
         task = candidate_task_info,
         browser=browser,
         llm=llm,
-        use_vision=True
-    )
+        use_vision=True  )
 
     history = await agent.run(max_steps=60)
     return history
