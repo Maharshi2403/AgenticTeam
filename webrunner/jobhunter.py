@@ -55,13 +55,16 @@ IMPORTANT RULES:
 """
     return task
 
-info = candidate_info(
-    url="https://recruiting.ultipro.ca/MNP5000MNPL/JobBoard/062c8fba-7371-4cd7-9e8a-94a0b8019ffc/OpportunityDetail?opportunityId=ccfd8af6-bd8b-473a-be5a-faf85ebe2b73&source=LinkedIn",
-    user_info=userData
-)
+# info = candidate_info(
+#     url="https://recruiting.ultipro.ca/MNP5000MNPL/JobBoard/062c8fba-7371-4cd7-9e8a-94a0b8019ffc/OpportunityDetail?opportunityId=ccfd8af6-bd8b-473a-be5a-faf85ebe2b73&source=LinkedIn",
+#     user_info=userData
+# )
+
+info = "open youtube.com and search for latest seiko watches"
+
 
 # SOLUTION: Switch to Pro model which has higher rate limits
-llm = ChatOpenAI(model='deepseek/deepseek-chat-v3-0324', api_key=DEEPSEEK_API_KEY, base_url='https://openrouter.ai/api/v1')
+llm = ChatOpenAI(model='qwen/qwen-2.5-vl-7b-instruct:free', api_key=DEEPSEEK_API_KEY, base_url='https://openrouter.ai/api/v1')
 
 
 
@@ -74,7 +77,10 @@ async def main(candidate_task_info: json):
         task = candidate_task_info,
         browser=browser,
         llm=llm,
-        use_vision=True  )
+        
+        temperature=0.7,
+        use_vision=True
+         )
 
     history = await agent.run(max_steps=60)
     return history
